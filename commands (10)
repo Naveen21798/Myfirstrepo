@@ -1,0 +1,23 @@
+######
+# Commands for Splitting "Monolithic Wordpress" to "2 tier architecture"
+######
+
+
+# Backup of Source Database
+mysqldump -u root -p demodb > demodb.sql
+
+
+# Restore to Destination Database
+mysql -h private_ip_of_db_server -u demouser -p demodb < demodb.sql 
+
+# Change WP Config
+cd /var/www/html
+sudo vim wp-config.php
+
+replace
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
+
+with 
+/** MySQL hostname */
+define('DB_HOST', 'private_ip_of_db_server'); 
